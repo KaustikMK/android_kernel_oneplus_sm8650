@@ -169,6 +169,8 @@ arch/*/configs/vendor/*_defconfig
 
 # vendor device tree directories
 arch/*/boot/dts/vendor
+!arch/arm64/boot/dts/vendor/
+!arch/arm64/boot/dts/vendor/**
 
 # Documentation toolchain
 sphinx_*/
@@ -177,9 +179,17 @@ sphinx_*/
 /rust-project.json
 
 drivers/soc/oplus
+!drivers/soc/oplus/
+!drivers/soc/oplus/**
 include/soc/oplus/dfr
 include/soc/oplus/dft
 include/soc/oplus/boot
+!include/soc/oplus/dfr/
+!include/soc/oplus/dfr/**
+!include/soc/oplus/dft/
+!include/soc/oplus/dft/**
+!include/soc/oplus/boot/
+!include/soc/oplus/boot/**
 # Android ABI build files
 abi_gki_protected_exports
 all_kmi_symbols
