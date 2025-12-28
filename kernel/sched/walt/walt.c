@@ -32,21 +32,21 @@
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_ABNORMAL_FLAG)
 #include <linux/task_overload.h>
 #endif
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_VT_CAP)
-#include <../kernel/oplus_cpu/sched/eas_opt/oplus_cap.h>
+#include "../../oplus_cpu/sched/eas_opt/oplus_cap.h"
 #endif
 #if IS_ENABLED(CONFIG_OPLUS_CPUFREQ_IOWAIT_PROTECT)
-#include <../kernel/oplus_cpu/sched/eas_opt/oplus_iowait.h>
+#include "../../oplus_cpu/sched/eas_opt/oplus_iowait.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_PIPELINE)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_pipeline.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_pipeline.h"
 #endif
 
 #ifdef CONFIG_OPLUS_BENCHMARK_CPU
