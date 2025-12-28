@@ -1,1 +1,4 @@
-../../../../vendor/oplus/kernel/synchronize/oplus_locking.c
+// SPDX-License-Identifier: GPL-2.0
+#include <linux/kernel.h>
+
+/* Dummy Oplus locking implementation */
