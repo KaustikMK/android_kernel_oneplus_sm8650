@@ -1,0 +1,49 @@
+name: Build kernel Image.gz
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-kernel.yml'
+      - 'arch/**'
+      - 'Makefile'
+      - 'Kconfig*'
+      - 'scripts/**'
+  pull_request:
+    paths:
+      - '.github/workflows/build-kernel.yml'
+      - 'arch/**'
+      - 'Makefile'
+      - 'Kconfig*'
+      - 'scripts/**'
+
+jobs:
+  build-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            bc \
+            bison \
+            flex \
+            gcc-aarch64-linux-gnu \
+            libelf-dev \
+            libssl-dev \
+            make
+
+      - name: Configure (defconfig)
+        run: make ARCH=arm64 defconfig
+
+      - name: Build Image.gz
+        run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" Image.gz
+
+      - name: Upload Image.gz
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image.gz
+          path: arch/arm64/boot/Image.gz
