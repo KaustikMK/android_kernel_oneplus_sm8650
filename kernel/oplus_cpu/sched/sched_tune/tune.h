@@ -2,12 +2,9 @@
 #ifndef _OPLUS_SCHED_TUNE_H
 #define _OPLUS_SCHED_TUNE_H
 
+#include <linux/cgroup.h>
+#include <linux/sched.h>
 #include <linux/types.h>
-
-struct cftype;
-struct cgroup_subsys_state;
-struct task_group;
-struct task_struct;
 
 static inline void schedtune_enqueue_task(struct task_struct *p, int cpu)
 {
