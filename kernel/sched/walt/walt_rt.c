@@ -10,10 +10,10 @@
 #include "walt.h"
 #include "trace.h"
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_SCHED_ASSIST)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_common.h"
 #endif
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 
 #ifdef CONFIG_OPLUS_BENCHMARK_CPU

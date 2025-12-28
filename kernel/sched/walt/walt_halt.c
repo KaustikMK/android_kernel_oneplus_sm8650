@@ -11,11 +11,11 @@
 
 #ifdef CONFIG_OPLUS_ADD_CORE_CTRL_MASK
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_SCHED_ASSIST)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_fair.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_common.h"
+#include "../../oplus_cpu/sched/sched_assist/sa_fair.h"
 #endif
 #endif /* CONFIG_OPLUS_ADD_CORE_CTRL_MASK */
 
