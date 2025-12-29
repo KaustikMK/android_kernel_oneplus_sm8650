@@ -3,19 +3,7 @@ name: Build kernel Image.gz
 on:
   workflow_dispatch:
   push:
-    paths:
-      - '.github/workflows/build-kernel.yml'
-      - 'arch/**'
-      - 'Makefile'
-      - 'Kconfig*'
-      - 'scripts/**'
   pull_request:
-    paths:
-      - '.github/workflows/build-kernel.yml'
-      - 'arch/**'
-      - 'Makefile'
-      - 'Kconfig*'
-      - 'scripts/**'
 
 jobs:
   build-arm64:
