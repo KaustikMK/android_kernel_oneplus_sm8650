@@ -2486,7 +2486,8 @@ static void free_dsq_irq_workfn(struct irq_work *irq_work)
 		kfree_rcu(dsq);
 }
 
-static DEFINE_IRQ_WORK(free_dsq_irq_work, free_dsq_irq_workfn);
+static struct irq_work free_dsq_irq_work __maybe_unused =
+	IRQ_WORK_INIT(free_dsq_irq_workfn);
 
 static void destroy_dsq(u64 dsq_id)
 {
