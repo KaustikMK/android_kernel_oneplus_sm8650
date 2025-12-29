@@ -51,7 +51,7 @@ static inline __maybe_unused int qti_update_tz_ops(struct thermal_zone_device *t
 	return 0;
 }
 
-static void disable_cdev_stats(void *unused,
+static void __maybe_unused disable_cdev_stats(void *unused,
 		struct thermal_cooling_device *cdev, bool *disable)
 {
 	*disable = true;
@@ -60,6 +60,7 @@ static void disable_cdev_stats(void *unused,
 /* Generic thermal vendor hooks initialization API */
 static inline __maybe_unused void thermal_vendor_hooks_init(void)
 {
+#if IS_ENABLED(CONFIG_ANDROID_VENDOR_HOOKS)
 	int ret;
 
 	ret = register_trace_android_vh_disable_thermal_cooling_stats(
@@ -68,12 +69,15 @@ static inline __maybe_unused void thermal_vendor_hooks_init(void)
 		pr_err("Failed to register disable thermal cdev stats hooks\n");
 		return;
 	}
+#endif
 }
 
 static inline __maybe_unused void thermal_vendor_hooks_exit(void)
 {
+#if IS_ENABLED(CONFIG_ANDROID_VENDOR_HOOKS)
 	unregister_trace_android_vh_disable_thermal_cooling_stats(
 			disable_cdev_stats, NULL);
+#endif
 }
 
 /*Generic helpers for thermal zone -> get_trend ops */

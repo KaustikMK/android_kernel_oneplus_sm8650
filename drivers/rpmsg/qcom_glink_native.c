@@ -1311,8 +1311,8 @@ static int qcom_glink_rx_data_zero_copy(struct qcom_glink *glink, size_t avail)
 		goto advance_rx;
 	}
 	if (intent->size) {
-		CH_ERR(channel, "zero copy req wrong intent liid:%d size:%d\n",
-		       liid, intent->size);
+		CH_ERR(channel, "zero copy req wrong intent liid:%d size:%zu\n",
+		       liid, (size_t)intent->size);
 		goto advance_rx;
 	}
 
