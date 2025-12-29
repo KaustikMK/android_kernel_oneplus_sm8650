@@ -23,7 +23,7 @@ enum vdd_levels {
 	VDD_NUM,
 };
 
-static int vdd_corner[] = {
+static int vdd_corner[] __maybe_unused = {
 	[VDD_NONE]	= 0,
 	[VDD_MIN]	= RPMH_REGULATOR_LEVEL_MIN_SVS,
 	[VDD_LOWER_D1]	= RPMH_REGULATOR_LEVEL_LOW_SVS_D1,

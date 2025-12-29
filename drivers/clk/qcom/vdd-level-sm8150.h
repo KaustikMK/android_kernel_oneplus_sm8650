@@ -36,7 +36,7 @@ static int vdd_corner[] = {
 	[VDD_HIGH_L1]   = RPMH_REGULATOR_LEVEL_TURBO_L1,
 };
 
-static int vdd_dual_corner[] = {
+static const int vdd_dual_corner[] __maybe_unused = {
 	0, 0,
 	RPMH_REGULATOR_LEVEL_MIN_SVS, RPMH_REGULATOR_LEVEL_MIN_SVS,
 	RPMH_REGULATOR_LEVEL_LOW_SVS_D1, RPMH_REGULATOR_LEVEL_LOW_SVS_D1,

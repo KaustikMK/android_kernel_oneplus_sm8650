@@ -494,8 +494,8 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
 		if (error)
 			dev_err(&pdev->dev, "failed to read PON_RT_STS rc=%d\n", error);
 		else
-			pr_info("KPDPWR status at init=0x%02x, KPDPWR_ON=%d\n",
-				sts, (sts & PON_KPDPWR_N_SET));
+			pr_info("KPDPWR status at init=0x%02x, KPDPWR_ON=%u\n",
+				sts, !!(sts & PON_KPDPWR_N_SET));
 	}
 
 	error = devm_request_threaded_irq(&pdev->dev, pwrkey->irq,
