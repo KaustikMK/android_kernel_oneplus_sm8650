@@ -34,8 +34,9 @@
 #ifdef CONFIG_BLOCKIO_UX_OPT
 extern unsigned long counter, total_us, max_us, min_us, aver_us;
 extern unsigned long restart_time, blk_send_ipi_counter;
-extern unsigned long erofs_decompress_ux, erofs_decompress_set_ux;
-extern unsigned long queue_work_ux;
+unsigned long __weak erofs_decompress_ux;
+unsigned long __weak erofs_decompress_set_ux;
+unsigned long __weak queue_work_ux;
 static int block_io_stat_show(struct seq_file *m, void *arg)
 {
 	seq_printf(m, "uxio sortirq: total_us = %lu, counter = %lu, "

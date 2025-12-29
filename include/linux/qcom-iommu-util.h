@@ -9,6 +9,8 @@
 
 #include <linux/iommu.h>
 #include <linux/dma-mapping.h>
+#include <linux/errno.h>
+#include <linux/kconfig.h>
 #include <linux/iova.h>
 
 #include <soc/qcom/secure_buffer.h>
@@ -108,6 +110,7 @@ struct qcom_iommu_ops {
 };
 #define to_qcom_iommu_ops(x) (container_of(x, struct qcom_iommu_ops, domain_ops))
 
+#if IS_REACHABLE(CONFIG_QCOM_IOMMU_UTIL)
 struct device_node *qcom_iommu_group_parse_phandle(struct device *dev);
 int qcom_iommu_generate_dma_regions(struct device *dev,
 				    struct list_head *head);
@@ -145,6 +148,99 @@ int qcom_iommu_set_fault_handler_irq(struct iommu_domain *domain,
 int qcom_iommu_enable_s1_translation(struct iommu_domain *domain);
 
 int qcom_iommu_get_mappings_configuration(struct iommu_domain *domain);
+#else
+static inline struct device_node *qcom_iommu_group_parse_phandle(struct device *dev)
+{
+	return NULL;
+}
+
+static inline int qcom_iommu_generate_dma_regions(struct device *dev,
+						  struct list_head *head)
+{
+	return -ENODEV;
+}
+
+static inline void qcom_iommu_generate_resv_regions(struct device *dev,
+						    struct list_head *list)
+{
+}
+
+static inline int qcom_iommu_get_fast_iova_range(struct device *dev,
+						 dma_addr_t *ret_iova_base,
+						 dma_addr_t *ret_iova_end)
+{
+	return -ENODEV;
+}
+
+static inline void qcom_iommu_get_resv_regions(struct device *dev,
+					       struct list_head *list)
+{
+}
+
+static inline phys_addr_t qcom_iommu_iova_to_phys_hard(struct iommu_domain *domain,
+						       struct qcom_iommu_atos_txn *txn)
+{
+	return 0;
+}
+
+static inline int qcom_iommu_sid_switch(struct device *dev, enum sid_switch_direction dir)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_skip_tlb_management(struct device *dev, bool skip)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_get_fault_ids(struct iommu_domain *domain,
+					   struct qcom_iommu_fault_ids *f_ids)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_get_msi_size(struct device *dev, u32 *msi_size)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_get_context_bank_nr(struct iommu_domain *domain)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_get_asid_nr(struct iommu_domain *domain)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_set_secure_vmid(struct iommu_domain *domain, enum vmid vmid)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_set_fault_model(struct iommu_domain *domain, int fault_model)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_set_fault_handler_irq(struct iommu_domain *domain,
+						   fault_handler_irq_t handler_irq,
+						   void *token)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_enable_s1_translation(struct iommu_domain *domain)
+{
+	return -ENODEV;
+}
+
+static inline int qcom_iommu_get_mappings_configuration(struct iommu_domain *domain)
+{
+	return -ENODEV;
+}
+#endif
 
 #ifdef CONFIG_IOMMU_IO_PGTABLE_LPAE
 int __init qcom_arm_lpae_do_selftests(void);
