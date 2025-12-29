@@ -2039,36 +2039,36 @@ static ssize_t arm_smmu_debug_capturebus_snapshot_read(struct file *file,
 		for (i = 0, x = 0; i < TTQTB_Capture_Points &&
 				x < 2*TTQTB_Capture_Points; i++, x += 2) {
 			scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-				"Latency_%d : 0x%lx\n",
-				i, ttlogs_time[x]);
+				"Latency_%d : 0x%llx\n",
+				i, (unsigned long long)ttlogs_time[x]);
 			scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-				"Timestamp_%d : 0x%lx\n",
-				i, ttlogs_time[x+1]);
+				"Timestamp_%d : 0x%llx\n",
+				i, (unsigned long long)ttlogs_time[x+1]);
 			if (qtb_type == 1) {
 				for (j = 0, y = 0; j < TTQTB_Regs_Per_Capture_Points &&
 						y < 2*TTQTB_Regs_Per_Capture_Points; j++, y += 2) {
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogIn_%d_%d : 0x%lx\n",
-						i, j, gfxttlogs[i][y]);
+						"LogIn_%d_%d : 0x%llx\n",
+						i, j, (unsigned long long)gfxttlogs[i][y]);
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogOut_%d_%d : 0x%lx\n",
-						i, j, gfxttlogs[i][y+1]);
+						"LogOut_%d_%d : 0x%llx\n",
+						i, j, (unsigned long long)gfxttlogs[i][y+1]);
 				}
 			} else if (qtb_type == 2) {
 				for (j = 0, y = 0; j < TTQTB_Regs_Per_Capture_Points &&
 						y < 4*TTQTB_Regs_Per_Capture_Points; j++, y += 4) {
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogIn_%d_%d_Low : 0x%lx\n",
-						i, j, ttlogs[i][y]);
+						"LogIn_%d_%d_Low : 0x%llx\n",
+						i, j, (unsigned long long)ttlogs[i][y]);
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogIn_%d_%d_High : 0x%lx\n",
-						i, j, ttlogs[i][y+1]);
+						"LogIn_%d_%d_High : 0x%llx\n",
+						i, j, (unsigned long long)ttlogs[i][y+1]);
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogOut_%d_%d_Low : 0x%lx\n",
-						i, j, ttlogs[i][y+2]);
+						"LogOut_%d_%d_Low : 0x%llx\n",
+						i, j, (unsigned long long)ttlogs[i][y+2]);
 					scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-						"LogOut_%d_%d_High : 0x%lx\n",
-						i, j, ttlogs[i][y+3]);
+						"LogOut_%d_%d_High : 0x%llx\n",
+						i, j, (unsigned long long)ttlogs[i][y+3]);
 				}
 
 			}
@@ -2310,13 +2310,13 @@ static ssize_t arm_smmu_debug_capturebus_config_read(struct file *file,
 
 		if (config == (TTQTB_GlbEn | TTQTB_IgnoreCtiTrigIn0 | TTQTB_LogAsstEn))
 			scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-					"Custom configuration selected, MainCtl filter val: 0x%0lx\n",
-					config);
+					"Custom configuration selected, MainCtl filter val: 0x%0llx\n",
+					(unsigned long long)config);
 
 		else if (config == (TTQTB_GlbEn | TTQTB_IgnoreCtiTrigIn0 | TTQTB_LogAll))
 			scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-					"Default configuration selected, MainCtl filter val : 0x%0lx\n",
-					config);
+					"Default configuration selected, MainCtl filter val : 0x%0llx\n",
+					(unsigned long long)config);
 
 		buflen = min(count, strlen(buf));
 
@@ -2360,7 +2360,8 @@ static ssize_t arm_smmu_debug_capturebus_config_read(struct file *file,
 			scnprintf(buf + strlen(buf), buf_len - strlen(buf),
 					"Match_%d : 0x%0llx\n", i+1, match[i]);
 		}
-		scnprintf(buf + strlen(buf), buf_len - strlen(buf), "0x%0lx\n", val);
+		scnprintf(buf + strlen(buf), buf_len - strlen(buf),
+			  "0x%0llx\n", (unsigned long long)val);
 
 		buflen = min(count, strlen(buf));
 		if (copy_to_user(ubuf, buf, buflen)) {
@@ -2500,11 +2501,11 @@ static ssize_t arm_smmu_debug_capturebus_filter_read(struct file *file,
 	arm_smmu_power_off(smmu, smmu->pwr);
 
 	scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-		"Filter_TrType : 0x%lx\n", filter[i]);
+		"Filter_TrType : 0x%llx\n", (unsigned long long)filter[i]);
 	scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-		"Filter_AddressMin : 0x%lx\n", filter[i+1]);
+		"Filter_AddressMin : 0x%llx\n", (unsigned long long)filter[i+1]);
 	scnprintf(buf + strlen(buf), buf_len - strlen(buf),
-		"Filter_AddressMax : 0x%lx\n", filter[i+2]);
+		"Filter_AddressMax : 0x%llx\n", (unsigned long long)filter[i+2]);
 
 
 	buflen = min(count, strlen(buf));

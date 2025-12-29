@@ -33,6 +33,6 @@ TRACE_EVENT(bam_dma_info,
 
 /* This part must be outside protection */
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../drivers/dma/qcom
 #define TRACE_INCLUDE_FILE bam_dma_trace
 #include <trace/define_trace.h>
