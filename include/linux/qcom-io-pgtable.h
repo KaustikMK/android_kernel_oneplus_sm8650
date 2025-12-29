@@ -7,6 +7,7 @@
 #define __QCOM_QCOM_IO_PGTABLE_H
 
 #include <linux/io-pgtable.h>
+#include <linux/kconfig.h>
 
 struct qcom_iommu_pgtable_log_ops {
 	void (*log_new_table)(void *cookie, void *virt, unsigned long iova, size_t granule);
@@ -37,10 +38,28 @@ container_of((x), struct qcom_io_pgtable_info, cfg)
 #define ARM_V8L_FAST ((unsigned int)-1)
 #define QCOM_ARM_64_LPAE_S1 ((unsigned int)-2)
 
+#if IS_REACHABLE(CONFIG_QCOM_IOMMU_UTIL)
 struct io_pgtable_ops *qcom_alloc_io_pgtable_ops(enum io_pgtable_fmt fmt,
 				struct qcom_io_pgtable_info *pgtbl_info,
 				void *cookie);
 void qcom_free_io_pgtable_ops(struct io_pgtable_ops *ops);
+#else
+static inline struct io_pgtable_ops *qcom_alloc_io_pgtable_ops(enum io_pgtable_fmt fmt,
+				struct qcom_io_pgtable_info *pgtbl_info,
+				void *cookie)
+{
+	if (fmt < IO_PGTABLE_NUM_FMTS)
+		return alloc_io_pgtable_ops(fmt, &pgtbl_info->cfg, cookie);
+
+	return NULL;
+}
+
+static inline void qcom_free_io_pgtable_ops(struct io_pgtable_ops *ops)
+{
+	if (ops)
+		free_io_pgtable_ops(ops);
+}
+#endif
 
 static inline void
 qcom_io_pgtable_tlb_add_walk_page(const struct qcom_iommu_flush_ops *tlb_ops, void *cookie,

@@ -7,6 +7,8 @@
 #ifndef __SOC_QCOM_SOCINFO_H__
 #define __SOC_QCOM_SOCINFO_H__
 
+#include <linux/errno.h>
+#include <linux/kconfig.h>
 #include <linux/types.h>
 
 enum feature_code {
@@ -121,7 +123,7 @@ enum subset_cluster_type {
 	NUM_CLUSTERS_MAX,
 };
 
-#if IS_ENABLED(CONFIG_QCOM_SOCINFO)
+#if IS_REACHABLE(CONFIG_QCOM_SOCINFO)
 uint32_t socinfo_get_id(void);
 uint32_t socinfo_get_serial_number(void);
 const char *socinfo_get_id_string(void);
@@ -151,39 +153,39 @@ static inline const char *socinfo_get_id_string(void)
 {
 	return "N/A";
 }
-int socinfo_get_feature_code(void)
+static inline int socinfo_get_feature_code(void)
 {
 	return -EINVAL;
 }
-int socinfo_get_pcode(void)
+static inline int socinfo_get_pcode(void)
 {
 	return -EINVAL;
 }
-const char *socinfo_get_partinfo_part_name(unsigned int part_id)
+static inline const char *socinfo_get_partinfo_part_name(unsigned int part_id)
 {
 	return NULL;
 }
-uint32_t socinfo_get_partinfo_chip_id(unsigned int part_id)
+static inline uint32_t socinfo_get_partinfo_chip_id(unsigned int part_id)
 {
 	return 0;
 }
-uint32_t socinfo_get_partinfo_vulkan_id(unsigned int part_id)
+static inline uint32_t socinfo_get_partinfo_vulkan_id(unsigned int part_id)
 {
 	return 0;
 }
-uint32_t socinfo_get_cluster_info(enum subset_cluster_type cluster)
+static inline uint32_t socinfo_get_cluster_info(enum subset_cluster_type cluster)
 {
 	return 0;
 }
-bool socinfo_get_part_info(enum subset_part_type part)
+static inline bool socinfo_get_part_info(enum subset_part_type part)
 {
 	return false;
 }
-int socinfo_get_part_count(enum subset_part_type part)
+static inline int socinfo_get_part_count(enum subset_part_type part)
 {
 	return -EINVAL;
 }
-int socinfo_get_subpart_info(enum subset_part_type part,
+static inline int socinfo_get_subpart_info(enum subset_part_type part,
 		u32 *part_info,
 		u32 num_parts)
 {
