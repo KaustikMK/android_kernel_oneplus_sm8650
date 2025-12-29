@@ -12,6 +12,10 @@
 
 LDFLAGS_vmlinux	:=--no-undefined -X --pic-veneer
 
+ifneq ($(SUBARCH),arm64)
+CROSS_COMPILE ?= aarch64-linux-gnu-
+endif
+
 ifeq ($(CONFIG_RELOCATABLE), y)
 # Pass --no-apply-dynamic-relocs to restore pre-binutils-2.27 behaviour
 # for relative relocs, since this leads to better Image compression
