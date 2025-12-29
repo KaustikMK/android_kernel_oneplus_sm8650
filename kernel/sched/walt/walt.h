@@ -24,11 +24,11 @@
 #define MSEC_TO_NSEC (1000 * 1000)
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_SCHED_ASSIST)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_fair.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_fair.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 
 #ifdef CONFIG_HZ_300

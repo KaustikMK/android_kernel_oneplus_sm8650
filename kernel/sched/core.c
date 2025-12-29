@@ -100,7 +100,7 @@
 #include <trace/hooks/cgroup.h>
 
 #if IS_ENABLED(CONFIG_OPLUS_SCHED_TUNE)
-#include <../kernel/oplus_cpu/sched/sched_tune/tune.h>
+#include "../oplus_cpu/sched/sched_tune/tune.h"
 #endif
 
 /*

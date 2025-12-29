@@ -14,22 +14,22 @@
 #include "../../../drivers/android/binder_trace.h"
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_SCHED_ASSIST)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_fair.h>
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_fair.h"
+#include "../../oplus_cpu/sched/sched_assist/sa_common.h"
 #ifdef CONFIG_OPLUS_CPU_AUDIO_PERF
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_audio.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_audio.h"
 #endif
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_PIPELINE)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_pipeline.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_pipeline.h"
 #endif
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_VT_CAP)
-#include <../kernel/oplus_cpu/sched/eas_opt/oplus_cap.h>
+#include "../../oplus_cpu/sched/eas_opt/oplus_cap.h"
 #endif
 
 #ifdef CONFIG_OPLUS_BENCHMARK_CPU

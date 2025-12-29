@@ -9,24 +9,24 @@
 #include "walt.h"
 #include "trace.h"
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_FRAME_BOOST)
-#include <../kernel/oplus_cpu/sched/frame_boost/frame_group.h>
+#include "../../oplus_cpu/sched/frame_boost/frame_group.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_LOADBALANCE)
-#include <../../oplus_cpu/sched/sched_assist/sa_balance.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_balance.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_ABNORMAL_FLAG)
 #include <linux/task_overload.h>
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_common.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_PIPELINE)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_pipeline.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_pipeline.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_SCHED_ASSIST)
-#include <../kernel/oplus_cpu/sched/sched_assist/sa_common.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_common.h"
 #endif
 
 static inline unsigned long walt_lb_cpu_util(int cpu)
