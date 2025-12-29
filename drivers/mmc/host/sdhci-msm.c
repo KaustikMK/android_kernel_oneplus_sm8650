@@ -7,6 +7,7 @@
  */
 
 #include <linux/module.h>
+#include <linux/kconfig.h>
 #include <linux/of_device.h>
 #include <linux/delay.h>
 #include <linux/mmc/mmc.h>
@@ -874,8 +875,9 @@ static int msm_init_cm_dll(struct sdhci_host *host,
 
 			mclk_freq = ROUND(dll_clock * cycle_cnt, TCXO_FREQ);
 			if (dll_clock < 100000000)
-				pr_err("%s: %s: Non standard clk freq =%u\n",
-				mmc_hostname(mmc), __func__, dll_clock);
+				pr_err("%s: %s: Non standard clk freq =%lu\n",
+				mmc_hostname(mmc), __func__,
+				(unsigned long)dll_clock);
 			writel_relaxed(((readl_relaxed(host->ioaddr +
 				msm_offset->core_dll_config_2)
 				& ~(0xFF << 10)) | (mclk_freq << 10)),
@@ -4400,7 +4402,7 @@ static int mmc_partial_init(struct mmc_host *mmc)
 	return err;
 }
 
-static void sdhci_msm_mmc_suspend(void *unused, struct mmc_host *mmc)
+static void __maybe_unused sdhci_msm_mmc_suspend(void *unused, struct mmc_host *mmc)
 {
 	mmc_cache_card(mmc);
 
@@ -4409,7 +4411,8 @@ static void sdhci_msm_mmc_suspend(void *unused, struct mmc_host *mmc)
 #endif
 }
 
-static void sdhci_msm_mmc_resume(void *unused, struct mmc_host *mmc, bool *resume_success)
+static void __maybe_unused sdhci_msm_mmc_resume(void *unused, struct mmc_host *mmc,
+						bool *resume_success)
 {
 	int err;
 
@@ -4692,8 +4695,8 @@ static int sdhci_msm_setup_qos(struct sdhci_msm_host *msm_host)
 			goto free_mem;
 		}
 		qcg->initialized = true;
-		dev_dbg(&pdev->dev, "%s: qcg: 0x%08x | mask: 0x%08x\n",
-				 __func__, qcg, qcg->mask);
+		dev_dbg(&pdev->dev, "%s: qcg: %p | mask: %*pb\n",
+			__func__, qcg, cpumask_pr_args(&qcg->mask));
 	}
 
 	/* Vote pmqos during setup for first set of mask*/
@@ -5588,10 +5591,12 @@ static int sdhci_msm_probe(struct platform_device *pdev)
 	pm_runtime_mark_last_busy(&pdev->dev);
 	pm_runtime_put_autosuspend(&pdev->dev);
 
+#if IS_ENABLED(CONFIG_TRACEPOINTS) && IS_ENABLED(CONFIG_ANDROID_VENDOR_HOOKS)
 	if (host->mmc->caps & MMC_CAP_NONREMOVABLE) {
 		register_trace_android_rvh_mmc_suspend(sdhci_msm_mmc_suspend, NULL);
 		register_trace_android_rvh_mmc_resume(sdhci_msm_mmc_resume, NULL);
 	}
+#endif
 	msm_host->sdhci_msm_pm_notifier.notifier_call
 		= sdhci_msm_hibernation_notifier;
 	ret = register_pm_notifier(&msm_host->sdhci_msm_pm_notifier);

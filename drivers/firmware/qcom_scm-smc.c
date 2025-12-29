@@ -59,7 +59,7 @@ static void __scm_smc_do_quirk(const struct arm_smccc_args *smc,
 
 static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
 {
-	memset(resume->args, 0, ARRAY_SIZE(resume->args));
+	memset(resume->args, 0, sizeof(resume->args));
 
 	resume->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
 			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
@@ -72,7 +72,7 @@ static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
 
 static void fill_wq_wake_ack_args(struct arm_smccc_args *wake_ack, u32 smc_call_ctx)
 {
-	memset(wake_ack->args, 0, ARRAY_SIZE(wake_ack->args));
+	memset(wake_ack->args, 0, sizeof(wake_ack->args));
 
 	wake_ack->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
 			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
@@ -85,7 +85,7 @@ static void fill_wq_wake_ack_args(struct arm_smccc_args *wake_ack, u32 smc_call_
 
 static void fill_get_wq_ctx_args(struct arm_smccc_args *get_wq_ctx)
 {
-	memset(get_wq_ctx->args, 0, ARRAY_SIZE(get_wq_ctx->args));
+	memset(get_wq_ctx->args, 0, sizeof(get_wq_ctx->args));
 
 	get_wq_ctx->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,
 			 ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
@@ -135,8 +135,8 @@ static int scm_smc_do_quirk(struct device *dev, struct arm_smccc_args *smc,
 			qscm = dev_get_drvdata(dev);
 			wq = qcom_scm_lookup_wq(qscm, wq_ctx);
 			if (IS_ERR_OR_NULL(wq)) {
-				pr_err("Did not find waitqueue for wq_ctx %d: %d\n",
-						wq_ctx, PTR_ERR(wq));
+				pr_err("Did not find waitqueue for wq_ctx %u: %ld\n",
+				       wq_ctx, PTR_ERR(wq));
 				return PTR_ERR(wq);
 			}
 

@@ -14,10 +14,14 @@
 #include <linux/platform_device.h>
 #include <linux/regmap.h>
 
+#include "common.h"
 #include "clk-regmap.h"
 #include "clk-regmap-mux-div.h"
 
-static const u32 gpll0_a53cc_map[] = { 4, 5 };
+static const struct parent_map gpll0_a53cc_map[] = {
+	{ .src = 4, .cfg = 4 },
+	{ .src = 5, .cfg = 5 },
+};
 
 static const struct clk_parent_data pdata[] = {
 	{ .fw_name = "aux", .name = "gpll0_vote", },

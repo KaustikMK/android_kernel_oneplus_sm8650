@@ -7,6 +7,7 @@
 #ifndef __DRIVERS_CLK_QCOM_VDD_LEVEL_SM8150_H
 #define __DRIVERS_CLK_QCOM_VDD_LEVEL_SM8150_H
 
+#include <linux/compiler_attributes.h>
 #include <linux/regulator/consumer.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
 
@@ -36,7 +37,7 @@ static int vdd_corner[] = {
 	[VDD_HIGH_L1]   = RPMH_REGULATOR_LEVEL_TURBO_L1,
 };
 
-static int vdd_dual_corner[] = {
+static int vdd_dual_corner[] __maybe_unused = {
 	0, 0,
 	RPMH_REGULATOR_LEVEL_MIN_SVS, RPMH_REGULATOR_LEVEL_MIN_SVS,
 	RPMH_REGULATOR_LEVEL_LOW_SVS_D1, RPMH_REGULATOR_LEVEL_LOW_SVS_D1,

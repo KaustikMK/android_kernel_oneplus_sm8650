@@ -320,6 +320,7 @@ static int qcom_scm_call_noretry(struct device *dev,
 		return scm_smc_call(dev, desc, res, QCOM_SCM_CALL_NORETRY);
 	case SMC_CONVENTION_LEGACY:
 		BUG_ON(1); /* No current implementation */
+		return -EINVAL;
 	default:
 		pr_err("Unknown current SCM calling convention.\n");
 		return -EINVAL;
@@ -2929,8 +2930,10 @@ static int qcom_scm_query_wq_queue_info(struct qcom_scm *scm)
 	scm->waitq.irq = res.result[1] & 0xFFFF;
 	scm->waitq.wq_feature = QCOM_SCM_MULTI_SMC_WHITE_LIST_ALLOW;
 
-	pr_info("WQ Info, feature: %d call_ctx_cnt: %d irq: %d\n",
-		scm->waitq.wq_feature, scm->waitq.call_ctx_cnt, scm->waitq.irq);
+	pr_info("WQ Info, feature: %llu call_ctx_cnt: %llu irq: %llu\n",
+		(unsigned long long)scm->waitq.wq_feature,
+		(unsigned long long)scm->waitq.call_ctx_cnt,
+		(unsigned long long)scm->waitq.irq);
 
 	return ret;
 }
@@ -3018,8 +3021,9 @@ static void scm_irq_work(struct work_struct *work)
 
 		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
 		if (IS_ERR_OR_NULL(wq_to_wake)) {
-			pr_err("No waitqueue found for wq_ctx %d: %d\n",
-					wq_ctx, PTR_ERR(wq_to_wake));
+			pr_err("No waitqueue found for wq_ctx %llu: %ld\n",
+			       (unsigned long long)wq_ctx,
+			       PTR_ERR(wq_to_wake));
 			return;
 		}
 
@@ -3121,8 +3125,8 @@ int  scm_mem_protection_init_do(void)
 	pid_offset = offsetof(struct task_struct, pid);
 	task_name_offset = offsetof(struct task_struct, comm);
 
-	pr_debug("offset of pid is %zu, offset of comm is %zu\n",
-			pid_offset, task_name_offset);
+	pr_debug("offset of pid is %u, offset of comm is %u\n",
+		 pid_offset, task_name_offset);
 	desc.args[0] = pid_offset,
 	desc.args[1] = task_name_offset,
 
