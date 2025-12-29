@@ -222,7 +222,7 @@ static inline long __trace_sched_switch_state(bool preempt,
 /*
  * Tracepoint for task switches, performed by the scheduler:
  */
-static int get_compound_prio(struct task_struct *p)
+static __maybe_unused int get_compound_prio(struct task_struct *p)
 {
 	struct css_set *cset;
 	int prio, cpu_cid, cpuset_cid;
