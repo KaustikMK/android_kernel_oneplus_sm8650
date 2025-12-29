@@ -453,6 +453,16 @@ endif
 KCONFIG_CONFIG	?= .config
 export KCONFIG_CONFIG
 
+# If no cross-compiler is specified for arm64, prefer the installed
+# GNU toolchain so config and build steps use consistent capabilities.
+ifeq ($(ARCH),arm64)
+ifeq ($(CROSS_COMPILE),)
+ifneq ($(shell command -v aarch64-linux-gnu-gcc 2>/dev/null),)
+CROSS_COMPILE := aarch64-linux-gnu-
+endif
+endif
+endif
+
 # SHELL used by kbuild
 CONFIG_SHELL := sh
 
