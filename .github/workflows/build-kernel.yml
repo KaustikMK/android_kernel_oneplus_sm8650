@@ -31,7 +31,7 @@ jobs:
         run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" Image.gz
 
       - name: Make DTBS
-        run: make dtbs
+        run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" dtbs
 
       - name: Append DTBS
         run: cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/**/*.dtb > arch/arm64/boot/Image.gz-dtb
