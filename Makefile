@@ -409,6 +409,9 @@ include $(srctree)/scripts/subarch.include
 # make ARCH=ia64
 # Another way is to have ARCH set in the environment.
 # The default ARCH is the host where make is executed.
+ifeq ($(origin ARCH), undefined)
+ARCH := arm64
+endif
 
 # CROSS_COMPILE specify the prefix used for all executables used
 # during compilation. Only gcc and related bin-utils executables
