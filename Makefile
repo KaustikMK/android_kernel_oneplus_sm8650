@@ -1300,6 +1300,11 @@ ifdef CONFIG_OF_EARLY_FLATTREE
 all: dtbs
 endif
 
+else # dtstree
+PHONY += dtbs dtbs_install dtbs_check
+dtbs dtbs_install dtbs_check:
+	@:
+
 endif
 
 PHONY += scripts_dtc
