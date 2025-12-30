@@ -30,10 +30,10 @@ jobs:
       - name: Build Image.gz
         run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" Image.gz
 
-        name: Make DTBS
+      - name: Make DTBS
         run: make dtbs
 
-        name: Append DTBS
+      - name: Append DTBS
         run: cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/**/*.dtb > arch/arm64/boot/Image.gz-dtb
 
       - name: Upload Image.gz-dtb
