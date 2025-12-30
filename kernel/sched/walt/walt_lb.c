@@ -13,7 +13,7 @@
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_LOADBALANCE)
-#include <../../oplus_cpu/sched/sched_assist/sa_balance.h>
+#include "../../oplus_cpu/sched/sched_assist/sa_balance.h"
 #endif
 
 #if IS_ENABLED(CONFIG_OPLUS_FEATURE_ABNORMAL_FLAG)
