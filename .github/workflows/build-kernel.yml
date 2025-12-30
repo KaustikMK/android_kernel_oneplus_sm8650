@@ -30,8 +30,14 @@ jobs:
       - name: Build Image.gz
         run: make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)" Image.gz
 
-      - name: Upload Image.gz
+        name: Make DTBS
+        run: make dtbs
+
+        name: Append DTBS
+        run: cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/**/*.dtb > arch/arm64/boot/Image.gz-dtb
+
+      - name: Upload Image.gz-dtb
         uses: actions/upload-artifact@v4
         with:
-          name: Image.gz
-          path: arch/arm64/boot/Image.gz
+          name: Image.gz-dtb
+          path: arch/arm64/boot/Image.gz-dtb
